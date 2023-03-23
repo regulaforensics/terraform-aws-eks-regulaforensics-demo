@@ -29,7 +29,7 @@ resource "helm_release" "docreader" {
 resource "helm_release" "faceapi" {
   count      = var.enable_faceapi == true ? 1 : 0
   name       = "faceapi"
-  repository = "https://regulaforensics.github.io/helm-test"
+  repository = "https://regulaforensics.github.io/helm-charts"
   chart      = "faceapi"
 
   values = [

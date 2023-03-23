@@ -2,7 +2,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.5.1"
 
-  cluster_name                   = local.cluster_name
+  cluster_name                   = "${var.name}-${random_string.suffix.result}"
   cluster_version                = var.cluster_version
   vpc_id                         = module.vpc.vpc_id
   subnet_ids                     = module.vpc.private_subnets
@@ -36,3 +36,7 @@ module "eks" {
   }
 }
 
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+}

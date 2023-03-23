@@ -1,14 +1,16 @@
 module "eks_cluster" {
   source             = "./modules"
-  enable_docreader   = var.enable_docreader
-  enable_faceapi     = var.enable_faceapi
-  cluster_version    = var.cluster_version
-  instance_types     = var.instance_types
+  account_id         = var.account_id
   region             = var.region
-  vpc_name           = var.vpc_name
+  name               = var.name
   vpc_cidr           = var.vpc_cidr
   vpc_private_subnet = var.vpc_private_subnet
   vpc_public_subnet  = var.vpc_public_subnet
-  account_id         = var.account_id
+  cluster_version    = var.cluster_version
+  instance_types     = var.instance_types
   capacity_type      = var.capacity_type
+  enable_docreader   = var.enable_docreader
+  docreader_values   = var.docreader_values
+  enable_faceapi     = var.enable_faceapi
+  faceapi_values     = var.faceapi_values
 }
