@@ -74,3 +74,15 @@ variable "faceapi_values" {
   type        = string
   default     = ""
 }
+
+variable "docreader_license" {
+  description = "Docreader Regula license file"
+  type        = string
+  default     = ""
+}
+
+variable "face_api_license" {
+  description = "Faceapi Regula license file"
+  type        = string
+  default     = ""
+}

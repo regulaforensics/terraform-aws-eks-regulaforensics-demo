@@ -22,9 +22,28 @@ module "eks_cluster" {
   region             = var.region
   name               = var.name
   enable_docreader   = true
+  enable_faceapi     = true
 }
 ```
-
+## Add Regula license for your chart
+```
+data "template_file" "docreader_license" {
+  template = filebase64("${path.module}/docreader-values/regula.license")
+}
+```
+```
+data "template_file" "face_api_license" {
+  template = filebase64("${path.module}/faceapi-values/regula.license")
+}
+```
+```hcl
+module "eks_cluster" {
+  ...
+  docreader_license  = data.template_file.docreader_license.rendered
+  face_api_license   = data.template_file.face_api_license.rendered
+  ...
+}
+```
 ## Execute terraform template
 ```bash
   terraform init
@@ -32,7 +51,7 @@ module "eks_cluster" {
   terraform apply
 ```
 
-## Custom Helm values
+## Optional. Custom Helm values
 
 ### Custom values for docreader chart
 If you are about to deploy docreader Helm chart with custom values:
@@ -40,7 +59,7 @@ If you are about to deploy docreader Helm chart with custom values:
 - pass file location to the `template_file` of `data source` block
 ```
 data "template_file" "docreader_values" {
-  template = file("${path.module}/docreader/values.yml")
+  template = file("${path.module}/docreader-values/values.yml")
 }
 ```
 ### Custom values for faceapi chart
@@ -49,7 +68,7 @@ If you are about to deploy faceapi Helm chart with custom values:
 - pass file location to the `template_file` of `data source` block
 ```
 data "template_file" "faceapi_values" {
-  template = file("${path.module}/faceapi/values.yml")
+  template = file("${path.module}/faceapi-values/values.yml")
 }
 ```
 
@@ -62,13 +81,6 @@ module "regulaforensics-demo" {
   faceapi_values   = data.template_file.faceapi_values.rendered
   ...
 }
-```
-
-And execute terraform template
-```bash
-  terraform init
-  terraform plan
-  terraform apply
 ```
 
 ## **Inputs**
@@ -87,3 +99,5 @@ And execute terraform template
 | docreader_values  | Docreader helm values                                             | string        | null                                         |
 | enable_faceapi    | Deploy Faceapi helm chart                                         | bool          | false                                        |
 | faceapi_values    | Faceapi helm values                                               | string        | null                                         |
+| docreader_license | Docreader Regula license file                                     | string        | null                                         |
+| face_api_license  | Faceapi Regula license file                                       | string        | null                                         |

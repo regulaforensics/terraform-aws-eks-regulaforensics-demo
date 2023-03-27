@@ -13,4 +13,6 @@ module "eks_cluster" {
   docreader_values   = var.docreader_values
   enable_faceapi     = var.enable_faceapi
   faceapi_values     = var.faceapi_values
+  docreader_license  = var.docreader_license
+  face_api_license   = var.face_api_license
 }
