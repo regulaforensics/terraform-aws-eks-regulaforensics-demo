@@ -28,12 +28,12 @@ module "eks_cluster" {
 ## Add Regula license for your chart
 ```
 data "template_file" "docreader_license" {
-  template = filebase64("${path.module}/docreader-values/regula.license")
+  template = filebase64("${path.module}/license/docreader/regula.license")
 }
 ```
 ```
 data "template_file" "face_api_license" {
-  template = filebase64("${path.module}/faceapi-values/regula.license")
+  template = filebase64("${path.module}/license/faceapi/regula.license")
 }
 ```
 ```hcl
@@ -59,7 +59,7 @@ If you are about to deploy docreader Helm chart with custom values:
 - pass file location to the `template_file` of `data source` block
 ```
 data "template_file" "docreader_values" {
-  template = file("${path.module}/docreader-values/values.yml")
+  template = file("${path.module}/values/docreader/values.yml")
 }
 ```
 ### Custom values for faceapi chart
@@ -68,7 +68,7 @@ If you are about to deploy faceapi Helm chart with custom values:
 - pass file location to the `template_file` of `data source` block
 ```
 data "template_file" "faceapi_values" {
-  template = file("${path.module}/faceapi-values/values.yml")
+  template = file("${path.module}/values/faceapi/values.yml")
 }
 ```
 
