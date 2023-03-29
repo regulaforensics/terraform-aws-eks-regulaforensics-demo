@@ -1,4 +1,4 @@
-# This module is intended to create an AWS EKS cluster for further Regula Forensics Helm chart deployment.
+# This module is intended to create an AWS EKS cluster for further Regula Forensics Helm chart deployment
 
 ## Prerequisites
 
