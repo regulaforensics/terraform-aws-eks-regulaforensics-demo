@@ -1,9 +1,10 @@
-# This module is intended to create AWS EKS cluster and for further regulaforensics helm charts deployment
+# This module is intended to create an AWS EKS cluster for further Regula Forensics Helm chart deployment
+
 ## Prerequisites
 
 **AWS**
-- AWS Account designated to deploy regulaforensics docreader/faceapi apps
-- **IAM** user that can assume **OrganizationAccountAccessRole** role in the destination AWS account
+- An AWS account designated to deploy Regula Forensics DocReader/FaceAPI apps.
+- An **IAM** user that can assume the **OrganizationAccountAccessRole** role in the destination AWS account.
 
 ## Preparation Steps
 ### Export AWS credentials
@@ -13,7 +14,7 @@
   export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 ```
 
-### Create terraform main.tf file and pass required variables **account_id** and **region** and **name**
+### Create a Terraform main.tf file and pass the required variables **account_id**, **region**, and **name**
 
 ```hcl
 module "eks_cluster" {
@@ -25,7 +26,7 @@ module "eks_cluster" {
   enable_faceapi     = true
 }
 ```
-## Add Regula license for your chart
+## Add a Regula license for your chart
 ```hcl
 data "template_file" "docreader_license" {
   template = filebase64("${path.module}/license/docreader/regula.license")
@@ -51,28 +52,28 @@ module "eks_cluster" {
   terraform apply
 ```
 
-## Optional. Custom Helm values
+## Optional: Custom Helm values
 
-### Custom values for docreader chart
-If you are about to deploy docreader Helm chart with custom values:
-- create **values.yml** in folder named by application (i.e. values/docreader/values.yml)
-- pass file location to the `template_file` of `data source` block
+### Custom values for Docreader chart
+If you are about to deploy a Docreader Helm chart with custom values:
+- Create a **values.yml** file in a folder named after the application (for example, values/docreader/values.yml).
+- Pass the file location to the `template_file` of `data source` block:
 ```hcl
 data "template_file" "docreader_values" {
   template = file("${path.module}/values/docreader/values.yml")
 }
 ```
-### Custom values for faceapi chart
-If you are about to deploy faceapi Helm chart with custom values:
-- create **values.yml** in folder named by application (i.e. values/faceapi/values.yml)
-- pass file location to the `template_file` of `data source` block
+### Custom values for Faceapi chart
+If you are about to deploy Faceapi Helm chart with custom values:
+- Create a **values.yml** in a folder named after the application (for example, values/faceapi/values.yml).
+- Pass the file location to the `template_file` of the `data source` block:
 ```hcl
 data "template_file" "faceapi_values" {
   template = file("${path.module}/values/faceapi/values.yml")
 }
 ```
 
-Finally, pass rendered template files to the `docreader_values/faceapi_values` variables
+Finally, pass rendered template files to the `docreader_values/faceapi_values` variables:
 ```
 module "regulaforensics-demo" {
   source           = "github.com/regulaforensics/terraform-aws-regulaforensics-demo"
@@ -95,9 +96,9 @@ module "regulaforensics-demo" {
 | cluster_version   | Kubernetes `<major>.<minor>` version to use for the EKS cluster   | string        | 1.24                                         |
 | instance_types    | Node instance type                                                | string        | t3.medium                                    |
 | capacity_type     | Node capacity type                                                | string        | SPOT                                         |
-| enable_docreader  | Deploy Docreader helm chart                                       | bool          | false                                        |
-| docreader_values  | Docreader helm values                                             | string        | null                                         |
-| enable_faceapi    | Deploy Faceapi helm chart                                         | bool          | false                                        |
-| faceapi_values    | Faceapi helm values                                               | string        | null                                         |
+| enable_docreader  | Deploy Docreader Helm chart                                       | bool          | false                                        |
+| docreader_values  | Docreader Helm values                                             | string        | null                                         |
+| enable_faceapi    | Deploy Faceapi Helm chart                                         | bool          | false                                        |
+| faceapi_values    | Faceapi Helm values                                               | string        | null                                         |
 | docreader_license | Docreader Regula license file                                     | string        | null                                         |
 | face_api_license  | Faceapi Regula license file                                       | string        | null                                         |
